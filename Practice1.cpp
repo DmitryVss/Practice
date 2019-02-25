@@ -1,25 +1,10 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
+const char *FDATA = "text.txt";
+const char *FRES = "res.txt";
 const int NMAX = 100;
-
-//выбор ввода
-void Input(char answer1)
-{
-	double a;
-	double b;
-	switch (answer1)
-	{
-	case 1:
-		cout << "¬ведите отрезок" << endl;
-		cin >> a >> b;
-		cout << "¬веден отрезок: [" << a << "," << b << "]" << endl;
-		break;
-	case 2: 
-		cout << "—читывание данных из text.txt";
-		break;
-	}
-}
 
 int main()
 {
@@ -30,16 +15,38 @@ int main()
 	double y[NMAX];									//массив значений функции
 	double hf[NMAX];								//массив значений h * f(x,y)
 	double f[NMAX];									//массив значений дифференциала функции
-	double h = 0.025;								//шаг
+	double h;										//шаг
 	double a;										//лева€ граница отрезка
 	double b;										//права€ граница отрезка
 	double NumberFragm = 0;                         //количество разбиений
 	int i;											//счетчик эл-тов
-	char answer1;
-	
-	cout << "»сходные данные вводить с клавиатуры?		1 - YES; 2 - NO";
-	cin >> answer1;
+	char answer;									//ответ на вопрос интерфейса;
 
+	//выбор ввода
+	cout << "»сходные данные вводить с клавиатуры?		Y/N"<<endl;
+	cin >> answer;
+	switch (answer)
+	{
+		case 'Y':
+		case 'y':
+			cout << "¬ведите отрезок" << endl;
+			cin >> a >> b;
+			cout << "¬веден отрезок: [" << a << "," << b << "]" << endl;
+			cout << "¬ведите количество шагов" << endl;
+			cin >> h;
+			cout << "¬ведено количество шагов h = " << h << endl;
+			break;
+		case 'N':
+		case 'n':
+			cout << "—читывание данных из text.txt"<<endl;
+			ifstream fin(FDATA);
+			fin >> a >> b;
+			cout << "—читан отрезок: [" << a << "," << b << "]" << endl; 
+			fin >> h;
+			cout << "—читано количество шагов h = " << h << endl;
+			break;
+			fin.close();
+	}
 	y[0] = 1;										//начальное значение функции
 
 	//подсчет количества шагов
@@ -56,10 +63,31 @@ int main()
 		hf[i] = f[i] * h;				
 		//cout << "hf[" << i << "] = " << hf[i]<<endl;
 		y[i + 1] = y[i] + hf[i];					//нахождение значени€ функции
-		cout << "y[" << i << "] = " << y[i]<<endl;
+		//cout << "y[" << i << "] = " << y[i]<<endl;
 	}
 
-	
+	//выбор вывода
+	cout << "–езультат выводить на экран?		Y/N" << endl;
+	cin >> answer;
+	switch (answer)
+	{
+		case 'Y':
+		case 'y':
+			for (i = 0; i <= NumberFragm; i++)
+			{
+				cout << "y[" << i << "] = " << y[i] << endl;
+			}
+			break;
+		case 'N':
+		case 'n':
+			cout << "¬ывод результатов в res.txt" << endl;
+			ofstream fout(FRES);
+			for (i = 0; i <= NumberFragm; i++)
+			{
+				fout << "y[" << i << "] = " << y[i] << endl;
+			}
+			break;
+	}
 
 	system("pause");
 	return 0;
