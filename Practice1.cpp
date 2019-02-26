@@ -1,5 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
+#include <stdlib.h>
+#include <cmath>
 using namespace std;
 
 const char *FDATA = "text.txt";
@@ -66,6 +69,25 @@ int main()
 		//cout << "y[" << i << "] = " << y[i]<<endl;
 	}
 
+	//построение графика
+	HDC hDC = GetDC(GetConsoleWindow());
+	HPEN Pen = CreatePen(PS_SOLID, 2, RGB(255, 255, 255));
+	SelectObject(hDC, Pen);
+	MoveToEx(hDC, 170, 255, NULL);
+	LineTo(hDC, 370, 255);
+	MoveToEx(hDC, 270, 170, NULL);
+	LineTo(hDC, 270, 340);
+	/*for (x = -8.0f; x <= 8.0f; x += 0.01f) // O(270,255) - center
+	{
+		MoveToEx(hDC, 10 * x + 270, -10 * sin(x) + 255, NULL);//10 - scale
+		LineTo(hDC, 10 * x + 270, -10 * sin(x) + 255);
+	}
+	*/
+	for (i = 0; i <= NumberFragm; i++)
+	{
+		MoveToEx(hDC, x[i] + 270, y[i] + 255, NULL);
+		LineTo(hDC, x[i+1] + 270, y[i+1] + 255);
+	}
 	//выбор вывода
 	cout << "Результат выводить на экран?		Y/N" << endl;
 	cin >> answer;
@@ -88,7 +110,6 @@ int main()
 			}
 			break;
 	}
-
 	system("pause");
 	return 0;
 }
