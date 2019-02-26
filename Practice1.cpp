@@ -77,17 +77,12 @@ int main()
 	LineTo(hDC, 370, 255);
 	MoveToEx(hDC, 270, 170, NULL);
 	LineTo(hDC, 270, 340);
-	/*for (x = -8.0f; x <= 8.0f; x += 0.01f) // O(270,255) - center
-	{
-		MoveToEx(hDC, 10 * x + 270, -10 * sin(x) + 255, NULL);//10 - scale
-		LineTo(hDC, 10 * x + 270, -10 * sin(x) + 255);
-	}
-	*/
 	for (i = 0; i <= NumberFragm; i++)
 	{
-		MoveToEx(hDC, x[i] + 270, y[i] + 255, NULL);
-		LineTo(hDC, x[i+1] + 270, y[i+1] + 255);
+		MoveToEx(hDC, 50 * x[i] + 270, -50 * y[i] + 255, NULL);
+		LineTo(hDC, 50 * x[i + 1] + 270, -50 * y[i + 1] + 255);
 	}
+
 	//выбор вывода
 	cout << "Результат выводить на экран?		Y/N" << endl;
 	cin >> answer;
