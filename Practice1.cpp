@@ -69,18 +69,24 @@ int main()
 		//cout << "y[" << i << "] = " << y[i]<<endl;
 	}
 
+	system("cls");
+
 	//построение графика
 	HDC hDC = GetDC(GetConsoleWindow());
 	HPEN Pen = CreatePen(PS_SOLID, 2, RGB(255, 255, 255));
 	SelectObject(hDC, Pen);
-	MoveToEx(hDC, 170, 255, NULL);
-	LineTo(hDC, 370, 255);
-	MoveToEx(hDC, 270, 170, NULL);
-	LineTo(hDC, 270, 340);
+	MoveToEx(hDC, 250, 335, NULL);
+	LineTo(hDC, 450, 335);
+	MoveToEx(hDC, 350, 250, NULL);
+	LineTo(hDC, 350, 420);
 	for (i = 0; i <= NumberFragm; i++)
 	{
-		MoveToEx(hDC, 50 * x[i] + 270, -50 * y[i] + 255, NULL);
-		LineTo(hDC, 50 * x[i + 1] + 270, -50 * y[i + 1] + 255);
+		MoveToEx(hDC, 200 * x[i] + 350, -100 * y[i] + 420, NULL);
+		LineTo(hDC, 200 * x[i + 1] + 350, -100 * y[i + 1] + 420);
+		if (i == (NumberFragm/2))
+		{
+			break;
+		}
 	}
 
 	//выбор вывода
